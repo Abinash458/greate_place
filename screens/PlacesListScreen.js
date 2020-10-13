@@ -1,14 +1,21 @@
-import React from 'react';
-import { View, FlatList, Text, StyleSheet, Platform } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, FlatList, StyleSheet, Platform } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import CustomHeaderButton from '../components/CustomHeaderButton';
 import PlaceItem from '../components/PlaceItem';
+import * as placeActions from '../store/actions/placeActions';
 
 const PlacesListScreen = props => {
 
     const places = useSelector(state => state.places.places);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(placeActions.loadPlaces())
+    }, [dispatch])
 
     return (
         <View>
@@ -18,7 +25,7 @@ const PlacesListScreen = props => {
                 renderItem={itemData =>
                     <PlaceItem
                         title={itemData.item.title}
-                        image={null}
+                        image={itemData.item.imageUri}
                         address={null}
                         onSelect={() => {
                             props.navigation.navigate('PlaceDetail', {
