@@ -26,7 +26,7 @@ const PlacesListScreen = props => {
                     <PlaceItem
                         title={itemData.item.title}
                         image={itemData.item.imageUri}
-                        address={null}
+                        address={itemData.item.address}
                         onSelect={() => {
                             props.navigation.navigate('PlaceDetail', {
                                 placeTitle: itemData.item.title,
